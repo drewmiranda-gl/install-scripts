@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  graylog-forwarder:
+    image: graylog/graylog-forwarder:5.1
+    container_name: glfwd-sandbox
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    volumes:
+      - type: bind
+        source: ./node-id
+        target: /data/node-id
+        read_only: true
+      - type: bind
+        source: ./graylog.geek4u.net.crt
+        target: /opt/graylog/tls/graylog.geek4u.net.crt
+        read_only: true
+    environment:
+      GRAYLOG_FORWARDER_SERVER_HOSTNAME: gl-for-fwd-test.geek4u.net
+      GRAYLOG_FORWARDER_GRPC_API_TOKEN: ${GRAYLOG_FORWARDER_GRPC_API_TOKEN}
+      GRAYLOG_FORWARDER_GRPC_TLS_TRUST_CHAIN_CERT_FILE: /opt/graylog/tls/graylog.geek4u.net.crt
+    ports:
+    - "5044:5044/tcp"   # Beats
+    - "5140:5140/tcp"   # Syslog TCP
+    - "5140:5140/udp"   # Syslog UDP
+    - "5555:5555/tcp"   # RAW TCP
+    - "5555:5555/udp"   # RAW TCP
+    - "9000:9000/tcp"   # Server API
+    - "12201:12201/tcp" # GELF TCP
+    - "12201:12201/udp" # GELF UDP
+    #- "10000:10000/tcp" # Custom TCP port
+    #- "10000:10000/udp" # Custom UDP port
+    - "13301:13301/tcp" # Forwarder data
+    - "13302:13302/tcp" # Forwarder config
+    restart: unless-stopped
