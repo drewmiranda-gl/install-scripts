@@ -14,6 +14,19 @@ root_check() {
 }
 root_check
 
+# Disable Transparent Huge Pages (THP)
+echo "Description=Disable Transparent Huge Pages (THP)
+DefaultDependencies=no
+After=sysinit.target local-fs.target
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'echo never | tee /sys/kernel/mm/transparent_hugepage/enabled > /dev/null'
+[Install]
+WantedBy=basic.target" | sudo tee /etc/systemd/system/disable-transparent-huge-pages.service
+sudo systemctl daemon-reload
+sudo systemctl enable disable-transparent-huge-pages
+sudo systemctl start disable-transparent-huge-pages
+
 # see releases via:
 # https://opensearch.org/lines/2x.html
 
