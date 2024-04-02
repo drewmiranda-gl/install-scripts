@@ -123,7 +123,7 @@ parse_smartctl_info() {
     Product) product="${info_value}" ;;
     Revision) revision="${info_value}" ;;
     Logical_Unit_id) lun_id="${info_value}" ;;
-    Sector_Size) sector_size="${info_value}" ;;
+    Sector_Size|Sector_Size) sector_size="${info_value}" ;;
     esac
     if [[ "${info_type}" == 'SMART_support_is' ]]; then
       case "${info_value:0:7}" in
@@ -148,7 +148,7 @@ parse_smartctl_info() {
   echo "device_smart_available{disk=\"${disk}\",type=\"${disk_type}\"} ${smart_available}"
   echo "device_smart_enabled{disk=\"${disk}\",type=\"${disk_type}\"} ${smart_enabled}"
 
-  sector_size_int=$(echo "$sector_size" | grep -oP "\d+")
+  sector_size_int=$(echo "$sector_size" | grep -oP "\d+" | head -n 1)
   echo "device_sector_size_logical{disk=\"${disk}\",type=\"${disk_type}\"} ${sector_size_int}"
   [[ "${smart_healthy}" != "" ]] && echo "device_smart_healthy{disk=\"${disk}\",type=\"${disk_type}\"} ${smart_healthy}"
 }
