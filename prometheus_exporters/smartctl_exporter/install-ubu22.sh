@@ -26,16 +26,14 @@ cd=$(ls -d smartctl_exporter-*linux-amd64)
 cd $cd
 sudo cp -f smartctl_exporter /usr/local/bin/
 
-sudo useradd -rs /bin/false smartctl_exporter
-
 sudo tee /etc/systemd/system/smartctl_exporter.service<<EOF
 [Unit]
 Description=Smartctl Exporter
 After=network.target
  
 [Service]
-User=smartctl_exporter
-Group=smartctl_exporter
+User=root
+Group=root
 Type=simple
 ExecStart=/usr/local/bin/smartctl_exporter
  
