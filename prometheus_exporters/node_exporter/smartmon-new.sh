@@ -145,7 +145,7 @@ parse_smartctl_info() {
     fi
   done
   echo "device_info{disk=\"${disk}\",type=\"${disk_type}\",vendor=\"${vendor}\",product=\"${product}\",revision=\"${revision}\",lun_id=\"${lun_id}\",model_family=\"${model_family}\",device_model=\"${device_model}\",serial_number=\"${serial_number}\",firmware_version=\"${fw_version}\",sector_size=\"${sector_size}\"} 1"
-  echo "device_smart_available{disk=\"${disk}\",type=\"${disk_type}\"} ${smart_available}"
+  echo "device_smart_available{disk=\"${disk}\",type=\"${disk_type}\",device_model=\"${device_model},serial_number=\"${serial_number}\",model_family=\"${model_family}\"} ${smart_available}"
   echo "device_smart_enabled{disk=\"${disk}\",type=\"${disk_type}\"} ${smart_enabled}"
 
   sector_size_int=$(echo "$sector_size" | grep -oP "\d+" | head -n 1)
