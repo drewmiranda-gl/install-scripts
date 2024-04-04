@@ -72,7 +72,7 @@ sudo systemctl start mongod.service
 # Graylog
 wget https://packages.graylog2.org/repo/packages/graylog-5.1-repository_latest.deb
 sudo dpkg -i graylog-5.1-repository_latest.deb
-sudo apt update && sudo apt install -y graylog-enterprise=5.1.1
+sudo apt update && sudo apt install -y graylog-enterprise=5.1.1-1
 
 sudo cp /etc/graylog/server/server.conf server.conf.bak
 tmppw=$(echo "admin" | tr -d '\n' | sha256sum | cut -d" " -f1)
