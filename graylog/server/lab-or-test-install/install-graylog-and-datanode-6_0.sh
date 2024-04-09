@@ -69,3 +69,6 @@ sudo sed -i 's/#http_bind_address = 127.0.0.1.*/http_bind_address = 0.0.0.0:9000
 sudo systemctl daemon-reload
 sudo systemctl enable graylog-server
 sudo systemctl start graylog-server
+
+echo "Please run to obtain first run password:"
+echo 'cat /var/log/graylog-server/server.log | grep -P "Initial configuration is accessible at"'
