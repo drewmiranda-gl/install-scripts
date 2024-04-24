@@ -16,6 +16,7 @@ root_check
 
 # Via https://github.com/maxmind/geoipupdate/releases
 wget https://github.com/maxmind/geoipupdate/releases/download/v7.0.1/geoipupdate_7.0.1_linux_amd64.deb
+wget https://raw.githubusercontent.com/drewmiranda-gl/install-scripts/main/maxmind/geoipupdate/upd-geo.sh
 dpkg -i geoipupdate_7.0.1_linux_amd64.deb
 
 echo "Acccount ID and license availaable via"
