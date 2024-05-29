@@ -35,7 +35,7 @@ After=network.target
 User=root
 Group=root
 Type=simple
-ExecStart=/usr/bin/mysqld_exporter --mysqld.address $(/usr/bin/hostname):3306 --config.my-cnf /root/mysqld_exporter.cnf --collect.binlog_size
+ExecStart=/usr/local/bin/mysqld_exporter --mysqld.address $(/usr/bin/hostname):3306 --config.my-cnf /root/mysqld_exporter.cnf --collect.binlog_size
 [Install]
 WantedBy=multi-user.target
 EOF
