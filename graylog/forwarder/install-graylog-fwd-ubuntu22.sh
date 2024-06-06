@@ -17,8 +17,8 @@ root_check
 apt update
 apt-get install -y openjdk-17-jdk-headless
 
-wget https://packages.graylog2.org/repo/packages/graylog-forwarder-repository_5-1_all.deb && \
-    dpkg -i graylog-forwarder-repository_5-1_all.deb && \
+wget https://packages.graylog2.org/repo/packages/graylog-forwarder-repository_6-1_all.deb && \
+    dpkg -i graylog-forwarder-repository_6-1_all.deb && \
     apt-get update && \
     apt-get install -y graylog-forwarder
 
