@@ -21,7 +21,7 @@ root_check
 #   - Ubuntu 22 cannot run MongoDB <6
 #   - Elasticsearch no longer publish install files for unsupported/end of life versions (e.g. 6.8 7.10)
 # 
-sudo apt update
+sudo apt update --allow-releaseinfo-change
 sudo apt-get install -y ca-certificates curl gnupg lsb-release
 
 sudo mkdir -p /etc/apt/keyrings
@@ -31,7 +31,7 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-sudo apt-get update
+sudo apt-get update --allow-releaseinfo-change
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-compose
 
 sudo mkdir -p /opt/docker/graylog-lab/

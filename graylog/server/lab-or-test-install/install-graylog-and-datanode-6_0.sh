@@ -24,7 +24,7 @@ echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf
 
 wget https://packages.graylog2.org/repo/packages/graylog-6.0-repository_latest.deb
 sudo dpkg -i graylog-6.0-repository_latest.deb
-sudo apt update && sudo apt install -y graylog-datanode
+sudo apt update --allow-releaseinfo-change && sudo apt install -y graylog-datanode
 
 # admin password
 tmppw=$(echo "admin" | tr -d '\n' | sha256sum | cut -d" " -f1)
@@ -48,7 +48,7 @@ curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg \
    --dearmor
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-sudo apt update
+sudo apt update --allow-releaseinfo-change
 sudo apt install -y mongodb-org mongodb-mongosh
 
 # Enable MongoDB service
@@ -58,7 +58,7 @@ sudo systemctl start mongod.service
 
 # =============================================================================
 # Graylog
-sudo apt update && sudo apt install -y graylog-enterprise
+sudo apt update --allow-releaseinfo-change && sudo apt install -y graylog-enterprise
 
 sudo cp /etc/graylog/server/server.conf server.conf.bak
 sudo sed -i "s/root_password_sha2 =.*/root_password_sha2 = $(cat /etc/graylog/datanode/datanode.conf | grep -P "root_password_sha2 = .*" | sed 's/root_password_sha2 =[[:blank:]]*//g')/g" /etc/graylog/server/server.conf
