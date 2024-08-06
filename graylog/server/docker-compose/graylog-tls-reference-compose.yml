@@ -1,0 +1,36 @@
+# NOTE: this is not a complete compose file, it contains items needed for TLS
+# For info about JKS, see https://graylog.org/post/how-to-guide-securing-graylog-with-tls/
+
+graylog:
+    environment:
+      # TLS
+      GRAYLOG_HTTP_BIND_ADDRESS: "0.0.0.0:443"
+      GRAYLOG_HTTP_EXTERNAL_URI: "https://host.domain.tld/"
+      GRAYLOG_HTTP_PUBLISH_URI: "https://host.domain.tld"
+      GRAYLOG_HTTP_ENABLE_TLS: "true"
+      GRAYLOG_HTTP_TLS_CERT_FILE: "/usr/share/graylog/cert.pem"
+      GRAYLOG_HTTP_TLS_KEY_FILE: "/usr/share/graylog/cert.key"
+      GRAYLOG_HTTP_TLS_KEY_PASSWORD: "..."
+      GRAYLOG_SERVER_JAVA_OPTS: "-Djavax.net.ssl.trustStore=/usr/share/graylog/graylog.jks"
+
+    ports:
+    # TLS
+    - "443:443/tcp"     # TLS
+
+
+    volumes:
+      # TLS
+      - type: bind
+        source: ./cert.pem
+        target: /usr/share/graylog/cert.pem
+        read_only: true
+
+      - type: bind
+        source: ./cert.key
+        target: /usr/share/graylog/cert.key
+        read_only: true
+
+      - type: bind
+        source: ./graylog.jks
+        target: /usr/share/graylog/graylog.jks
+        read_only: true
