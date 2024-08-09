@@ -14,12 +14,16 @@ root_check() {
 }
 root_check
 
-echo please download release from
-echo https://prometheus.io/download/#node_exporter
-echo e.g.
-echo "wget https://...."
-read -p "Confirmation 1 of 2: Press [Enter] key to continue..."
-read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
+# echo please download release from
+# echo https://prometheus.io/download/#node_exporter
+# echo e.g.
+# echo "wget https://...."
+# read -p "Confirmation 1 of 2: Press [Enter] key to continue..."
+# read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
+
+CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
+DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-amd64.tar.gz"
+wget $DLURL
 
 for file in node_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
 cd=$(ls -d node_exporter-*linux-amd64)
