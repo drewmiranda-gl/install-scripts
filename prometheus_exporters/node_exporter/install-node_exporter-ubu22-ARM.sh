@@ -25,8 +25,8 @@ CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/rel
 DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-arm64.tar.gz"
 wget $DLURL
 
-for file in node_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
-cd=$(ls -d node_exporter-*linux-amd64)
+for file in node_exporter-*linux-arm64.tar.gz; do tar -zxf "$file"; done
+cd=$(ls -d node_exporter-*linux-arm64)
 cd $cd
 sudo cp -f node_exporter /usr/local/bin/
 
