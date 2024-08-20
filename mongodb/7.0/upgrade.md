@@ -31,3 +31,15 @@ sudo apt update
 # Perform Upgrade
 
 Execute `upgrade-minor.sh`
+
+Set compatibility version to latest:
+
+```sh
+mongosh --quiet --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "7.0", confirm: true } )'
+```
+
+Verify:
+
+```sh
+mongosh --quiet --eval 'db.adminCommand( { getParameter: 1, featureCompatibilityVersion: 1 } )'
+```
