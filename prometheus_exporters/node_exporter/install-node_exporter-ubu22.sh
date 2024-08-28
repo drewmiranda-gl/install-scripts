@@ -8,7 +8,7 @@ root_check() {
     else
         echo "ERROR! Please run as root."
         echo "Try: 'sudo su' to elevate and then run install script again."
-	echo "OR sudo bash $0"
+	echo "OR bash $0"
         exit 1
     fi
 }
@@ -28,11 +28,11 @@ wget $DLURL
 for file in node_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
 cd=$(ls -d node_exporter-*linux-amd64)
 cd $cd
-sudo cp -f node_exporter /usr/local/bin/
+cp -f node_exporter /usr/local/bin/
 
-sudo useradd -rs /bin/false node_exporter
+useradd -rs /bin/false node_exporter
 
-sudo tee /etc/systemd/system/node_exporter.service<<EOF
+tee /etc/systemd/system/node_exporter.service<<EOF
 [Unit]
 Description=Node Exporter
 After=network.target
@@ -47,6 +47,6 @@ ExecStart=/usr/local/bin/node_exporter
 WantedBy=multi-user.target
 EOF
 
-sudo systemctl daemon-reload
-sudo systemctl start node_exporter
-sudo systemctl enable node_exporter
+systemctl daemon-reload
+systemctl start node_exporter
+systemctl enable node_exporter
