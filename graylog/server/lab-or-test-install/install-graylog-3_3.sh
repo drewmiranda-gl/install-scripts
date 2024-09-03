@@ -80,8 +80,8 @@ sudo docker compose -f /opt/docker/graylog-lab/graylog-lab-depend-docker-compose
 # =============================================================================
 # Graylog
 wget https://packages.graylog2.org/repo/packages/graylog-3.3-repository_latest.deb
-sudo dpkg -i graylog-4.3-repository_latest.deb
-sudo apt update && sudo apt install -y graylog-enterprise openjdk-17-jre-headless
+sudo dpkg -i graylog-3.3-repository_latest.deb
+sudo apt update && sudo apt install -y graylog-server graylog-integrations-plugins graylog-enterprise-plugins graylog-enterprise-integrations-plugins openjdk-17-jre-headless
 
 sudo cp /etc/graylog/server/server.conf server.conf.bak
 tmppw=$(echo "admin" | tr -d '\n' | sha256sum | cut -d" " -f1)
