@@ -91,7 +91,8 @@ tmppw=$(openssl rand -hex 32)
 sudo sed -i "s/password_secret =.*/password_secret = $tmppw/g" /etc/graylog/server/server.conf
 tmppw=abc
 
-sudo sed -i 's/#http_bind_address = 127.0.0.1.*/http_bind_address = 0.0.0.0:9000/g' /etc/graylog/server/server.conf
+tmp_ip_bind=$(ip route get 1.2.3.4 | awk '{print $7}' | head -n 1)
+sudo sed -i "s/#http_bind_address = 127.0.0.1.*/http_bind_address = ${tmp_ip_bind}:9000/g" /etc/graylog/server/server.conf
 
 tmpip=127.0.0.1
 sudo sed -i "s/#elasticsearch_hosts = .*/elasticsearch_hosts = http\:\/\/$tmpip\:9200/g" /etc/graylog/server/server.conf
