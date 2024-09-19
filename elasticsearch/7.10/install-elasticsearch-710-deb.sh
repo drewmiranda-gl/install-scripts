@@ -26,6 +26,9 @@ sudo dpkg -i elasticsearch-7.10.2-amd64.deb
 # minimal config
 sudo tee -a /etc/elasticsearch/elasticsearch.yml > /dev/null <<EOT
 cluster.name: graylog
+network.host: 0.0.0.0
+node.name: node-1
+cluster.initial_master_nodes: ["node-1"]
 EOT
 
 # services
