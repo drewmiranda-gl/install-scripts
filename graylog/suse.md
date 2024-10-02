@@ -26,6 +26,20 @@ Install
 sudo zypper install graylog-enterprise
 ```
 
+## Cannot Enable `graylog-server`
+
+If you receive an error when attempting to `sudo systemctl enable graylog-server`:
+
+```
+ln: failed to create symbolic link '/etc/init.d/rc2.d/S50graylog-server': No such file or directory
+```
+
+Use the following command to delete the conflicting file
+
+```shell
+sudo rm /etc/init.d/graylog-server
+```
+
 # Graylog Forwarder
 
 Install OpenJDK
