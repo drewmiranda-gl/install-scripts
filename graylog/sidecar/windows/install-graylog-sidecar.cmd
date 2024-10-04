@@ -10,3 +10,4 @@ powershell -Command "& {Invoke-WebRequest -URI https://github.com/Graylog2/colle
 @REM Install
 "%~dp0graylog_sidecar_installer.exe" /S -SERVERURL=https://GRAYLOGSERVER.DOMAIN.COM/api -APITOKEN=YOURAPITOKEN
 @REM note: previous versions required explicitly installing and starting the service. this is no longer required.
+@REM "C:\Program Files\Graylog\sidecar\graylog-sidecar.exe" -service install
