@@ -14,12 +14,16 @@ root_check() {
 }
 root_check
 
-echo please download release from
-echo https://github.com/prometheus-community/smartctl_exporter/releases/tag/v0.12.0
-echo e.g.
-echo "wget https://...."
-read -p "Confirmation 1 of 2: Press [Enter] key to continue..."
-read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
+# echo please download release from
+# echo https://github.com/prometheus-community/smartctl_exporter/releases/tag/v0.12.0
+# echo e.g.
+# echo "wget https://...."
+# read -p "Confirmation 1 of 2: Press [Enter] key to continue..."
+# read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
+
+CURVER=$(curl --silent https://api.github.com/repos/prometheus-community/smartctl_exporter/releases | grep -oP '"name": .*' | grep -P 'linux-amd64' | head -n 1 | grep -oP '\d+\.\d+\.\d+')
+DLURL="https://github.com/prometheus-community/smartctl_exporter/releases/download/v${CURVER}/smartctl_exporter-${CURVER}.linux-amd64.tar.gz"
+wget $DLURL
 
 for file in smartctl_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
 cd=$(ls -d smartctl_exporter-*linux-amd64)
