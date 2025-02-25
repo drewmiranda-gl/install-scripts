@@ -1,0 +1,1 @@
+moved to [elastic/elasticsearch](../elastic/elasticsearch)
