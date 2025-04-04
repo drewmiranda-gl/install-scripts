@@ -14,7 +14,7 @@ curl -sfL https://get.k3s.io | K3S_URL=https://URL:6443 K3S_TOKEN=<token> sh -
 
 Set `KUBECONFIG`
 
-```
+```sh
 # profile
 echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bashrc
 # root
@@ -28,3 +28,4 @@ echo "KUBECONFIG=/etc/rancher/k3s/k3s.yaml" | sudo tee -a /etc/environment
 ```
 
 # Install Helm
+
