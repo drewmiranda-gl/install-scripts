@@ -1,0 +1,52 @@
+# TEMP
+# Needed for Graylog
+fields_under_root: true
+# fields.source: <hostname>
+
+filebeat.inputs:
+
+# JournalD
+# - type: journald
+#   id: everything
+#   tags: ["journald"]
+#   seek: tail
+
+# Filestream w/ multiline
+# - type: filestream
+#   id: filestream-one
+#   paths:
+#     - /log.log
+#   ignore_inactive: since_last_start
+#   parsers:
+#     - multiline:
+#         type: pattern
+#         pattern: '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}'
+#         negate: true
+#         match: after
+
+# Filestream
+- type: filestream
+  id: filestream-two
+  paths:
+    - /log.log
+  ignore_inactive: since_last_start
+  close_removed: true
+  close_renamed: true
+  tags: ["tag one", "tag two"]
+
+output.logstash:
+   hosts: ["graylog.domain.tld:5044"]
+
+logging:
+  level: info
+
+  # enable file rotation with default configuration
+  to_files: true
+
+  # do not log to syslog
+  to_syslog: false
+
+  files:
+    path: /var/log/beats
+    name: filebeat.log
+    keepfiles: 7
