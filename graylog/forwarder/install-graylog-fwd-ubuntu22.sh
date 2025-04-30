@@ -32,3 +32,7 @@ echo -ne "Enter Graylog forwarder_server_hostname: " && tmp=$(head -1 </dev/stdi
 
 echo -ne "Enter Graylog forwarder_grpc_api_token: " && tmp=$(head -1 </dev/stdin) && \
     sed -i "s/^forwarder_grpc_api_token.*/forwarder_grpc_api_token = $tmp/g" /etc/graylog/forwarder/forwarder.conf
+
+echo "Don't forget to enable/start your forwarder:"
+echo 'sudo systemctl enable graylog-forwarder'
+echo 'sudo systemctl start graylog-forwarder'
