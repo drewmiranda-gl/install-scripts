@@ -17,10 +17,12 @@ root_check
 apt update
 apt-get install -y openjdk-17-jdk-headless
 
-wget https://packages.graylog2.org/repo/packages/graylog-forwarder-repository_6-1_all.deb && \
-    dpkg -i graylog-forwarder-repository_6-1_all.deb && \
-    apt-get update && \
-    apt-get install -y graylog-forwarder
+curl -fsSL https://packages.graylog2.org/repo/debian/keyring.gpg |
+    sudo gpg --dearmor --batch --yes -o /etc/apt/trusted.gpg.d/graylog-keyring.gpg
+echo "deb https://packages.graylog2.org/repo/debian/ forwarder-stable 6" | 
+    sudo tee /etc/apt/sources.list.d/graylog-forwarder.list
+    
+apt-get update && apt-get install -y graylog-forwarder
 
 sed -i '/^LimitNOFILE=64000.*/a AmbientCapabilities=CAP_NET_BIND_SERVICE' /usr/lib/systemd/system/graylog-forwarder.service && \
     systemctl daemon-reload
