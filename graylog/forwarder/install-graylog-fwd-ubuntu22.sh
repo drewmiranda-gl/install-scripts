@@ -15,7 +15,7 @@ root_check() {
 root_check
 
 apt update
-apt-get install -y openjdk-17-jdk-headless
+apt-get install -y openjdk-21-jdk-headless
 
 curl -fsSL https://packages.graylog2.org/repo/debian/keyring.gpg |
     sudo gpg --dearmor --batch --yes -o /etc/apt/trusted.gpg.d/graylog-keyring.gpg
