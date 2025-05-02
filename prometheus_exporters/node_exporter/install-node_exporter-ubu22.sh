@@ -54,7 +54,7 @@ echo ""
 CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
 DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-amd64.tar.gz"
 echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR}"
-wget $DLURL
+wget --quiet $DLURL
 
 echo -e "${BLUE}Extracting...${ENDCOLOR}"
 for file in node_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
