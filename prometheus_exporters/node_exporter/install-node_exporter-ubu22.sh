@@ -37,9 +37,12 @@ echo -e "${BLUE}Node Exporter install/upgrade script${ENDCOLOR}"
 echo "===================================="
 echo ""
 
+ARCH=$(dpkg --print-architecture)
+
 ABS_PATH_BSE=$(dirname "$0")
 cd "$(dirname "$0")"
 echo -e "Host: ${BLUE}$(hostname)${ENDCOLOR}"
+echo -e "Architecture ${YELLOW}${ARCH}${ENDCOLOR}"
 echo -e "Current Working Dir: ${BLUE}$(pwd)${ENDCOLOR}"
 echo -e "Absolute Path Base: ${BLUE}${ABS_PATH_BSE}${ENDCOLOR}"
 echo ""
@@ -52,13 +55,16 @@ echo ""
 # read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
 
 CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
-DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-amd64.tar.gz"
-echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR}"
+DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-${ARCH}.tar.gz"
+echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR} via ${DLURL}"
 wget --quiet $DLURL
 
+FILETGZ="node_exporter-*linux-${ARCH}.tar.gz"
+FILEDIR="node_exporter-*linux-${ARCH}"
+
 echo -e "${BLUE}Extracting...${ENDCOLOR}"
-for file in node_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
-cd=$(ls -d node_exporter-*linux-amd64 | tail -n 1)
+for file in $FILETGZ; do tar -zxf "$file"; done
+cd=$(ls -d $FILEDIR | tail -n 1)
 
 echo -e "Changing working dir: ${BLUE}${cd}${ENDCOLOR}"
 cd $cd
