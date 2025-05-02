@@ -37,11 +37,11 @@ echo -e "${BLUE}Node Exporter install/upgrade script${ENDCOLOR}"
 echo "===================================="
 echo ""
 
+ABS_PATH_BSE=$(dirname "$0")
 cd "$(dirname "$0")"
-echo "Host:"
-hostname
-echo "Current Working Dir:"
-pwd
+echo -e "Host: ${BLUE}$(hostname)${ENDCOLOR}"
+echo -e "Current Working Dir: ${BLUE}$(pwd)${ENDCOLOR}"
+echo -e "Absolute Path Base: ${BLUE}${ABS_PATH_BSE}${ENDCOLOR}"
 echo ""
 
 # echo please download release from
