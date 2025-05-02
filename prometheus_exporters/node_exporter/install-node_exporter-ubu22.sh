@@ -48,5 +48,5 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-systemctl start node_exporter
+systemctl restart node_exporter
 systemctl enable node_exporter
