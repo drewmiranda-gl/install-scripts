@@ -1,0 +1,29 @@
+---
+modules:
+  default:
+    headers:
+      X-Dummy: my-test-header
+    metrics:
+    - name: elasticsearch_file_cache
+      type: object
+      help: Example of sub-level value scrapes from a json
+      path: '{ $.nodes.* }'
+      labels:
+        # environment: beta # static label
+        name: '{.name}'
+        host: '{.host}'
+      values:
+        # active: 1         # static value
+        active_in_bytes: '{ .file_cache.active_in_bytes }'
+        total_in_bytes: '{ .file_cache.total_in_bytes }'
+        used_in_bytes: '{ .file_cache.used_in_bytes }'
+        evictions_in_bytes: '{ .file_cache.evictions_in_bytes }'
+        active_percent: '{ .file_cache.active_percent }'
+        used_percent: '{ .file_cache.used_percent }'
+        hit_count: '{ .file_cache.hit_count }'
+        miss_count: '{ .file_cache.miss_count }'
+    http_client_config:
+      tls_config:
+        insecure_skip_verify: true
+        cert_file: '/opt/certs/cert.crt'
+        key_file: '/opt/certs/cert.key'
