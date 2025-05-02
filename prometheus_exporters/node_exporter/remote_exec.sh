@@ -37,7 +37,7 @@ while IFS= read -r HOST <&3; do
 
   echo ""
   echo ""
-  echo "Connecting to ${GREEN}$HOST${ENDCOLOR}..."
+  echo -e "Connecting to ${GREEN}$HOST${ENDCOLOR}..."
   ssh drew@${HOST} "
   rm -f install-node_exporter-ubu22.sh \
       && wget --quiet https://raw.githubusercontent.com/drewmiranda-gl/install-scripts/refs/heads/main/prometheus_exporters/node_exporter/install-node_exporter-ubu22.sh \
