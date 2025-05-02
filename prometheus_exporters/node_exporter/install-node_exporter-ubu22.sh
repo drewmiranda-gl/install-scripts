@@ -68,6 +68,8 @@ cd=$(ls -d $FILEDIR | tail -n 1)
 
 echo -e "Changing working dir: ${BLUE}${cd}${ENDCOLOR}"
 cd $cd
+
+echo -e "Copying node_exporter to: ${BLUE}/usr/local/bin/${ENDCOLOR}"
 cp -f node_exporter /usr/local/bin/
 
 echo -e "Adding user: ${BLUE}node_exporter${ENDCOLOR}"
