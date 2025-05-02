@@ -14,6 +14,8 @@ root_check() {
 }
 root_check
 
+cd "$(dirname "$0")"
+
 # echo please download release from
 # echo https://prometheus.io/download/#node_exporter
 # echo e.g.
