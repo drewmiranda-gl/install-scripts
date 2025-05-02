@@ -1,5 +1,20 @@
 #!/bin/bash
 
+RED="\e[31m"
+# ${RED}
+
+GREEN="\e[32m"
+# ${GREEN}
+
+BLUE="\e[34m"
+# ${BLUE}
+
+YELLOW="\e[33m"
+# ${YELLOW}
+
+ENDCOLOR="\e[0m"
+# ${ENDCOLOR}
+
 HOSTS_FILE="$1"
 
 # Check if filename is passed as an argument
@@ -20,10 +35,12 @@ fi
 while IFS= read -r HOST <&3; do
   [ -z "$HOST" ] && continue
 
-  echo "Connecting to $HOST..."
+  echo ""
+  echo ""
+  echo "Connecting to ${GREEN}$HOST${ENDCOLOR}..."
   ssh drew@${HOST} "
   rm -f install-node_exporter-ubu22.sh \
-      && wget https://raw.githubusercontent.com/drewmiranda-gl/install-scripts/refs/heads/main/prometheus_exporters/node_exporter/install-node_exporter-ubu22.sh \
+      && wget --quiet https://raw.githubusercontent.com/drewmiranda-gl/install-scripts/refs/heads/main/prometheus_exporters/node_exporter/install-node_exporter-ubu22.sh \
       && sudo bash install-node_exporter-ubu22.sh
   "
 
