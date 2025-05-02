@@ -68,8 +68,7 @@ echo -e "Adding user: ${BLUE}node_exporter${ENDCOLOR}"
 useradd -rs /bin/false node_exporter
 
 echo -e "Creating .service file: ${BLUE}/etc/systemd/system/node_exporter.service${ENDCOLOR}"
-tee /etc/systemd/system/node_exporter.service<<EOF
-[Unit]
+echo '[Unit]
 Description=Node Exporter
 After=network.target
  
@@ -80,8 +79,7 @@ Type=simple
 ExecStart=/usr/local/bin/node_exporter
  
 [Install]
-WantedBy=multi-user.target
-EOF
+WantedBy=multi-user.target' | sudo tee /etc/systemd/system/node_exporter.service > /dev/null 2>&1
 
 echo -e "${BLUE}Reloading...${ENDCOLOR}"
 systemctl daemon-reload
