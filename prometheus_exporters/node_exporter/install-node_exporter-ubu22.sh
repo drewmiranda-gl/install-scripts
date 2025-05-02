@@ -1,5 +1,20 @@
 #!/bin/bash
 
+RED="\e[31m"
+# ${RED}
+
+GREEN="\e[32m"
+# ${GREEN}
+
+BLUE="\e[34m"
+# ${BLUE}
+
+YELLOW="\e[33m"
+# ${YELLOW}
+
+ENDCOLOR="\e[0m"
+# ${ENDCOLOR}
+
 root_check() {
     get_curusr=$(whoami)
     if [ $get_curusr == "root" ]
@@ -14,7 +29,20 @@ root_check() {
 }
 root_check
 
+echo ""
+echo ""
+echo ""
+echo "===================================="
+echo -e "${BLUE}Node Exporter install/upgrade script${ENDCOLOR}"
+echo "===================================="
+echo ""
+
 cd "$(dirname "$0")"
+echo "Host:"
+hostname
+echo "Current Working Dir:"
+pwd
+echo ""
 
 # echo please download release from
 # echo https://prometheus.io/download/#node_exporter
@@ -25,15 +53,21 @@ cd "$(dirname "$0")"
 
 CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
 DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-amd64.tar.gz"
+echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR}"
 wget $DLURL
 
+echo -e "${BLUE}Extracting...${ENDCOLOR}"
 for file in node_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
 cd=$(ls -d node_exporter-*linux-amd64)
+
+echo -e "Changing working dir: ${BLUE}${cd}${ENDCOLOR}"
 cd $cd
 cp -f node_exporter /usr/local/bin/
 
+echo -e "Adding user: ${BLUE}node_exporter${ENDCOLOR}"
 useradd -rs /bin/false node_exporter
 
+echo -e "Creating .service file: ${BLUE}/etc/systemd/system/node_exporter.service${ENDCOLOR}"
 tee /etc/systemd/system/node_exporter.service<<EOF
 [Unit]
 Description=Node Exporter
@@ -49,6 +83,9 @@ ExecStart=/usr/local/bin/node_exporter
 WantedBy=multi-user.target
 EOF
 
+echo -e "${BLUE}Reloading...${ENDCOLOR}"
 systemctl daemon-reload
+echo -e "Restart ${BLUE}node_exporter${ENDCOLOR}"
 systemctl restart node_exporter
+echo -e "enable ${BLUE}node_exporter${ENDCOLOR}"
 systemctl enable node_exporter
