@@ -58,7 +58,7 @@ wget --quiet $DLURL
 
 echo -e "${BLUE}Extracting...${ENDCOLOR}"
 for file in node_exporter-*linux-amd64.tar.gz; do tar -zxf "$file"; done
-cd=$(ls -d node_exporter-*linux-amd64)
+cd=$(ls -d node_exporter-*linux-amd64 | tail -n 1)
 
 echo -e "Changing working dir: ${BLUE}${cd}${ENDCOLOR}"
 cd $cd
