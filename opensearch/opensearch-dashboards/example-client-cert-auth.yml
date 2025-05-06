@@ -1,0 +1,14 @@
+---
+server.port: 5601
+server.host: "0.0.0.0"
+
+opensearch.hosts: ["https://hostname.domain.tld:9200"]
+opensearch.username: kibanaserver
+opensearch.password: kibanaserver
+
+opensearch.ssl.verificationMode: full
+opensearch.ssl.alwaysPresentCertificate: true
+opensearch.ssl.certificate: /opt/tls/cert.crt
+opensearch.ssl.key: /opt/tls/cert.key
+opensearch.ssl.certificateAuthorities: [ "/opt/tls/ca.crt" ]
+# opensearch.ssl.keyPassphrase: "password"
