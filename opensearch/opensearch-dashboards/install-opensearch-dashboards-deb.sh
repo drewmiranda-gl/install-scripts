@@ -1,5 +1,21 @@
 #!/bin/bash
 
+RED="\e[31m"
+# ${RED}
+
+GREEN="\e[32m"
+# ${GREEN}
+
+BLUE="\e[34m"
+# ${BLUE}
+
+YELLOW="\e[33m"
+# ${YELLOW}
+
+ENDCOLOR="\e[0m"
+NC='\e[0m' # No Color
+# ${ENDCOLOR}
+
 root_check() {
     get_curusr=$(whoami)
     if [ $get_curusr == "root" ]
@@ -36,13 +52,17 @@ server.port: 5601
 server.host: "0.0.0.0"
 opensearch.hosts: ["http://127.0.0.1:9200"]
 opensearch.ssl.verificationMode: none
+opensearch.username: kibanaserver
+opensearch.password: kibanaserver
 EOF
 
 # remove the security plugin so we can login
-sudo rm -rf /usr/share/opensearch-dashboards/plugins/securityDashboards
+# sudo rm -rf /usr/share/opensearch-dashboards/plugins/securityDashboards
 
 # enable and start service
 sudo systemctl daemon-reload
 sudo systemctl enable opensearch-dashboards
 sudo systemctl start opensearch-dashboards
-echo opensearch-dashboards should now be accessible on TCP Port :5061
+echo -e "${BLUE}opensearch-dashboards${NC} should now be accessible on TCP Port :${GREEN}5061${NC}"
+echo -e "${YELLOW}username${NC}: ${GREEN}kibanaserver${NC}"
+echo -e "${YELLOW}password${NC}: ${GREEN}kibanaserver${NC}"
