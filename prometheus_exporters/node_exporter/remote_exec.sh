@@ -23,14 +23,14 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-# Open file descriptor 3 for reading from the file
-exec 3< "$HOSTS_FILE"
-
 # Check if the file exists
 if [ ! -f "$HOSTS_FILE" ]; then
   echo "File not found: $HOSTS_FILE"
   exit 1
 fi
+
+# Open file descriptor 3 for reading from the file
+exec 3< "$HOSTS_FILE"
 
 while IFS= read -r HOST <&3; do
   [ -z "$HOST" ] && continue
