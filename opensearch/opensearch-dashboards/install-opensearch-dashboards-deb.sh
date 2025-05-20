@@ -63,6 +63,6 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable opensearch-dashboards
 sudo systemctl start opensearch-dashboards
-echo -e "${BLUE}opensearch-dashboards${NC} should now be accessible on TCP Port :${GREEN}5061${NC}"
+echo -e "${BLUE}opensearch-dashboards${NC} should now be accessible on TCP Port :${GREEN}5601${NC}"
 echo -e "${YELLOW}username${NC}: ${GREEN}kibanaserver${NC}"
 echo -e "${YELLOW}password${NC}: ${GREEN}kibanaserver${NC}"
