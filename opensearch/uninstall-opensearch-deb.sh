@@ -18,6 +18,9 @@ root_check
 echo "Stopping OpenSearch service..."
 systemctl stop opensearch
 
+# Remove using APT
+apt remove opensearch -y
+
 echo "Deleting OpenSearch service"
 # delete service
 rm -f /lib/systemd/system/opensearch.service
