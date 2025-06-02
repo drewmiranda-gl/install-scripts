@@ -37,6 +37,11 @@ echo -e "${BLUE}Node Exporter install/upgrade script${ENDCOLOR}"
 echo "===================================="
 echo ""
 
+# or for alpine
+# apk --print-arch
+# ARCH=$(apk --print-arch)
+# if outputs `x86_64` translate to `amd64`
+# ARCH=amd64
 ARCH=$(dpkg --print-architecture)
 
 ABS_PATH_BSE=$(dirname "$0")
@@ -55,6 +60,9 @@ echo ""
 # read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
 
 CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
+# FOR Alpine
+# CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oE '"name": .*' | head -n 1 | grep -oE '[0-9]\.[0-9]\.[0-9]')
+
 DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-${ARCH}.tar.gz"
 echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR} via ${DLURL}"
 wget --quiet $DLURL
@@ -68,6 +76,8 @@ cd=$(ls -d $FILEDIR | tail -n 1)
 
 echo -e "Changing working dir: ${BLUE}${cd}${ENDCOLOR}"
 cd $cd
+
+# need to sort out how TF to get this working with alpine :(
 
 echo -e "Copying node_exporter to: ${BLUE}/usr/local/bin/${ENDCOLOR}"
 cp -f node_exporter /usr/local/bin/
