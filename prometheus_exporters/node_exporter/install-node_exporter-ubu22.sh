@@ -87,11 +87,12 @@ Type=simple
 ExecStart=/usr/local/bin/node_exporter
  
 [Install]
-WantedBy=multi-user.target' | sudo tee /etc/systemd/system/node_exporter.service > /dev/null 2>&1
+WantedBy=multi-user.target' | tee /etc/systemd/system/node_exporter.service > /dev/null 2>&1
 
 echo -e "${BLUE}Reloading...${ENDCOLOR}"
 systemctl daemon-reload
 echo -e "Restart ${BLUE}node_exporter${ENDCOLOR}"
 systemctl restart node_exporter
 echo -e "enable ${BLUE}node_exporter${ENDCOLOR}"
+
 systemctl enable node_exporter
