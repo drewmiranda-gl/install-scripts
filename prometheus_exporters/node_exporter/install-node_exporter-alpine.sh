@@ -51,6 +51,7 @@ echo -e "Current Working Dir: ${BLUE}$(pwd)${ENDCOLOR}"
 echo -e "Absolute Path Base: ${BLUE}${ABS_PATH_BSE}${ENDCOLOR}"
 echo ""
 
+# Download latest node_exporter binary from official github releases page
 CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oE '"name": .*' | head -n 1 | grep -oE '[0-9]\.[0-9]\.[0-9]')
 DLURL="https://github.com/prometheus/node_exporter/releases/download/v${CURVER}/node_exporter-${CURVER}.linux-${ARCH}.tar.gz"
 echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR} via ${DLURL}"
@@ -59,6 +60,7 @@ wget --quiet $DLURL
 FILETGZ="node_exporter-*linux-${ARCH}.tar.gz"
 FILEDIR="node_exporter-*linux-${ARCH}"
 
+# Extract/copy
 echo -e "${BLUE}Extracting...${ENDCOLOR}"
 for file in $FILETGZ; do tar -zxf "$file"; done
 cd=$(ls -d $FILEDIR | tail -n 1)
@@ -69,8 +71,8 @@ cd $cd
 echo -e "Copying node_exporter to: ${BLUE}/usr/local/bin/${ENDCOLOR}"
 cp -f node_exporter /usr/local/bin/
 
-echo -e "Creating .service file: ${BLUE}/etc/systemd/system/node_exporter.service${ENDCOLOR}"
-# /etc/init.d/
+# Install Service, start, run on boot
+echo -e "Creating .service file: ${BLUE}/etc/init.d/node_exporter${ENDCOLOR}"
 
 echo '#!/sbin/openrc-run
 
