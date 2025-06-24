@@ -1,4 +1,10 @@
 #!/bin/sh
+# ======================
+# REQUIRES CURL!
+# apk add curl
+#
+# rm install-node_exporter-alpine.sh; wget https://raw.githubusercontent.com/drewmiranda-gl/install-scripts/refs/heads/main/prometheus_exporters/node_exporter/install-node_exporter-alpine.sh && sh install-node_exporter-alpine.sh
+# =====================
 
 RED="\e[31m"
 # ${RED}
