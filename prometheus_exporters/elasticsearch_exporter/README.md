@@ -21,3 +21,5 @@ Fields added. Note that these fields are added for each individual index.
 ```
 elasticsearch_indices_mappings_stats_fields
 ```
+
+For a reference dashboard that uses this field, see [Elasticsearch (OpenSearch) Fields Per Index-1750861340249.json](https://github.com/drewmiranda-gl/Getting-Started-with-Metrics/blob/main/grafana/dashboards/Elasticsearch%20(OpenSearch)%20Fields%20Per%20Index-1750861340249.json)
