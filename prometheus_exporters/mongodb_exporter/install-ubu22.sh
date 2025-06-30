@@ -29,10 +29,19 @@ sudo tee /etc/systemd/system/mongodb_exporter.service<<EOF
 [Unit]
 Description=MongoDB Exporter
 After=network.target
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
 [Service]
 User=mongodb_exporter
 Type=simple
-ExecStart=/usr/bin/mongodb_exporter --mongodb.uri=mongodb://127.0.0.1:27017 --discovering-mode --collect-all
+ExecStart=/usr/bin/mongodb_exporter \
+    --mongodb.uri=mongodb://127.0.0.1:27017 \
+    --discovering-mode \
+    --collect-all
+Restart=on-failure
+RestartSec=5s
+
 [Install]
 WantedBy=multi-user.target
 EOF

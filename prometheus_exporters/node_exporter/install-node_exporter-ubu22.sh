@@ -89,13 +89,17 @@ echo -e "Creating .service file: ${BLUE}/etc/systemd/system/node_exporter.servic
 echo '[Unit]
 Description=Node Exporter
 After=network.target
- 
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
 [Service]
 User=node_exporter
 Group=node_exporter
 Type=simple
 ExecStart=/usr/local/bin/node_exporter
- 
+Restart=on-failure
+RestartSec=5s
+
 [Install]
 WantedBy=multi-user.target' | tee /etc/systemd/system/node_exporter.service > /dev/null 2>&1
 

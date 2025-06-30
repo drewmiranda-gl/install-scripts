@@ -34,13 +34,17 @@ sudo tee /etc/systemd/system/smartctl_exporter.service<<EOF
 [Unit]
 Description=Smartctl Exporter
 After=network.target
- 
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
 [Service]
 User=root
 Group=root
 Type=simple
 ExecStart=/usr/local/bin/smartctl_exporter
- 
+Restart=on-failure
+RestartSec=5s
+
 [Install]
 WantedBy=multi-user.target
 EOF

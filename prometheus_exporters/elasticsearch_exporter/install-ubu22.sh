@@ -74,13 +74,17 @@ echo -e "Creating .service file: ${BLUE}/etc/systemd/system/elasticsearch_export
 echo '[Unit]
 Description=Node Exporter
 After=network.target
- 
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
 [Service]
 User=elasticsearch_exporter
 Group=elasticsearch_exporter
 Type=simple
 ExecStart=/usr/local/bin/elasticsearch_exporter
- 
+Restart=on-failure
+RestartSec=5s
+
 [Install]
 WantedBy=multi-user.target' | sudo tee /etc/systemd/system/elasticsearch_exporter.service > /dev/null 2>&1
 

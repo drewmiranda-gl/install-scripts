@@ -31,11 +31,20 @@ sudo tee /etc/systemd/system/mysqld_exporter.service<<EOF
 [Unit]
 Description=Mysqld Exporter
 After=network.target
+StartLimitIntervalSec=30
+StartLimitBurst=3
+
 [Service]
 User=root
 Group=root
 Type=simple
-ExecStart=/usr/local/bin/mysqld_exporter --mysqld.address $(/usr/bin/hostname):3306 --config.my-cnf /root/mysqld_exporter.cnf --collect.binlog_size
+ExecStart=/usr/local/bin/mysqld_exporter \
+    --mysqld.address $(/usr/bin/hostname):3306 \
+    --config.my-cnf /root/mysqld_exporter.cnf \
+    --collect.binlog_size
+Restart=on-failure
+RestartSec=5s
+
 [Install]
 WantedBy=multi-user.target
 EOF

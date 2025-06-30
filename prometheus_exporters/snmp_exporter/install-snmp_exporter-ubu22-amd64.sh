@@ -34,11 +34,16 @@ sudo tee /etc/systemd/system/snmp_exporter.service<<EOF
 [Unit]
 Description=Prometheus SNMP Exporter Service
 After=network.target
+StartLimitIntervalSec=30
+StartLimitBurst=3
 
 [Service]
 Type=simple
 User=prometheus
-ExecStart=/usr/local/bin/snmp_exporter --config.file="/usr/local/bin/snmp.yml"
+ExecStart=/usr/local/bin/snmp_exporter \
+    --config.file="/usr/local/bin/snmp.yml"
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
