@@ -99,11 +99,11 @@ RestartSec=5s
 WantedBy=multi-user.target" | tee /etc/systemd/system/${DOWNLOAD_PRODUCTNAME}.service > /dev/null 2>&1
 
 echo -e "${BLUE}Reloading...${ENDCOLOR}"
-sudo systemctl daemon-reload
+systemctl daemon-reload
 
 echo -e "Restart ${BLUE}${DOWNLOAD_PRODUCTNAME}${ENDCOLOR}"
-sudo systemctl restart ${DOWNLOAD_PRODUCTNAME}
+systemctl restart ${DOWNLOAD_PRODUCTNAME}
 
-sudo systemctl enable ${DOWNLOAD_PRODUCTNAME}
+systemctl enable ${DOWNLOAD_PRODUCTNAME}
 
 echo -e "Listening on TCP port ${YELLOW}${TCP_LISTEN_PORT}${ENDCOLOR}"
