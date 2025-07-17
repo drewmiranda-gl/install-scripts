@@ -58,6 +58,9 @@ DLURL="https://github.com/${REPOOWNER}/${REPONAME}/releases/download/v${CURVER}/
 echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR} via ${DLURL}"
 wget --quiet $DLURL
 
+# Download default config file
+wget --quiet https://raw.githubusercontent.com/drewmiranda-gl/install-scripts/refs/heads/main/prometheus_exporters/process_exporter/process-exporter-config.yml
+
 FILETGZ="${DOWNLOAD_PRODUCTNAME}-*linux-${ARCH}.tar.gz"
 FILEDIR="${DOWNLOAD_PRODUCTNAME}-*linux-${ARCH}"
 
