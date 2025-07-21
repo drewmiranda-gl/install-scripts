@@ -1,0 +1,1 @@
+https://github.com/sapcc/ntp_exporter/releases
