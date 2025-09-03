@@ -56,9 +56,8 @@ Verify config works, do a dry run:
 sudo logrotate -d /etc/logrotate.d/mongod
 ```
 
-To force mongo to "rotate" its log file immediately:
+To force mongo to "rotate" its log file immediately, via `mongosh`:
 
 ```sh
-# via mongosh
 db.adminCommand({ logRotate: 1 })
 ```
