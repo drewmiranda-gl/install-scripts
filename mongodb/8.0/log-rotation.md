@@ -44,7 +44,7 @@ echo "/var/log/mongodb/*.log {
     notifempty
     sharedscripts
     postrotate
-        /bin/kill -SIGUSR1 `cat /var/lib/mongodb/mongod.lock 2> /dev/null` 2> /dev/null || true
+        /bin/kill -SIGUSR1 \`cat /var/lib/mongodb/mongod.lock 2> /dev/null\` 2> /dev/null || true
     endscript
 }
 " | sudo tee /etc/logrotate.d/mongod
