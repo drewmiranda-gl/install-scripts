@@ -18,4 +18,7 @@ root_check
 # Graylog
 wget https://packages.graylog2.org/repo/packages/graylog-6.3-repository_latest.deb
 sudo dpkg -i graylog-6.3-repository_latest.deb
-sudo apt update && sudo apt install -y graylog-enterprise
+sudo apt update
+# required for reporting
+sudo apt install -y fontconfig fonts-dejavu
+sudo apt install -y graylog-enterprise

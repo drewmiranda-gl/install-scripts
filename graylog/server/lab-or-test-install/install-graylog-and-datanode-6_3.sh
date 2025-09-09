@@ -57,6 +57,8 @@ sudo systemctl start mongod.service
 
 # =============================================================================
 # Graylog
+# required for reporting
+sudo apt-get install fontconfig fonts-dejavu
 sudo apt update --allow-releaseinfo-change && sudo apt install -y graylog-enterprise
 
 sudo cp /etc/graylog/server/server.conf server.conf.bak
