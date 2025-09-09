@@ -18,11 +18,14 @@ repo_gpgcheck=0' | sudo tee /etc/zypp/repos.d/graylog.repo
 
 Refresh zypper repositories
 ```shell
-sudo zypper --gpg-auto-import-keys ref
+sudo zypper --gpg-auto-import-keys refresh
 ```
 
 Install
 ```shell
+# required for reports
+sudo zypper refresh
+sudo zypper install fontconfig fonts-dejavu
 sudo zypper install graylog-enterprise
 ```
 
