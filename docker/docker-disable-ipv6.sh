@@ -1,10 +1,14 @@
 #!/bin/bash
 
-# "ipv6": false
-# cat /etc/docker/daemon.json | jq
-
 DOCKER_DAEMON_FILE="/etc/docker/daemon.json"
 TMP_FILE="${DOCKER_DAEMON_FILE}.tmp"
+
+echo "Please run as ROOT"
+echo "This script will add '\"ipv6\": false' to ${DOCKER_DAEMON_FILE}"
+echo "This will disable IPv6 for docker/docker containers"
+read -p "Confirmation 1 of 2: This will restart the docker service and will restart all docker containers..."
+read -p "Confirmation 2 of 2: This will restart the docker service and will restart all docker containers..."
+
 
 echo "Docker Daemon File: ${DOCKER_DAEMON_FILE}"
 if [ -f "${DOCKER_DAEMON_FILE}" ]; then
