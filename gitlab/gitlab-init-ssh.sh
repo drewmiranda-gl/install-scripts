@@ -21,4 +21,5 @@ if [ -f "${SSH_KEY_FILE}" ]; then
     echo -e "${GREEN}======== START: Copy key below ========${ENDCOLOR}"
     cat ~/.ssh/id_ed25519.pub
     echo -e "${GREEN}======== END: Copy key above ========${ENDCOLOR}"
+    echo -e "Add to Gitlab via ${BLUE}/-/user_settings/ssh_keys${ENDCOLOR}"
 fi
