@@ -18,7 +18,7 @@ if [ -f "${SSH_KEY_FILE}" ]; then
 else
     echo -e "${YELLOW}Key file does NOT exist${ENDCOLOR} ${BLUE}$(readlink -f ${SSH_KEY_FILE})${ENDCOLOR}"
     echo "Generating SSH Key..."
-    ssh-keygen -t ed25519 -C "gitlab-user-$(whoami)"
+    ssh-keygen -t ed25519 -C "$(hostname)___$(whoami)"
 fi
 
 if [ -f "${SSH_KEY_FILE}" ]; then
