@@ -70,5 +70,8 @@ sudo systemctl daemon-reload
 sudo systemctl enable graylog-server
 sudo systemctl start graylog-server
 
-echo "Please run to obtain first run password:"
-echo 'cat /var/log/graylog-server/server.log | grep -P "Initial configuration is accessible at"'
+# echo "Please run to obtain first run password:"
+# echo 'cat /var/log/graylog-server/server.log | grep -P "Initial configuration is accessible at"'
+echo "Waiting for 5 seconds to allow Graylog services to start..."
+sleep 5
+cat /var/log/graylog-server/server.log | grep -P "Initial configuration is accessible at"
