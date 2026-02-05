@@ -19,7 +19,7 @@ apt-get install -y openjdk-21-jdk-headless
 
 curl -fsSL https://packages.graylog2.org/repo/debian/keyring.gpg |
     sudo gpg --dearmor --batch --yes -o /etc/apt/trusted.gpg.d/graylog-keyring.gpg
-echo "deb https://packages.graylog2.org/repo/debian/ forwarder-stable 6" | 
+echo "deb https://packages.graylog2.org/repo/debian/ forwarder-stable 7" | 
     sudo tee /etc/apt/sources.list.d/graylog-forwarder.list
     
 apt-get update && apt-get install -y graylog-forwarder
