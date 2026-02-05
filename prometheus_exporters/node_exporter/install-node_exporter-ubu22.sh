@@ -59,7 +59,7 @@ echo ""
 # read -p "Confirmation 1 of 2: Press [Enter] key to continue..."
 # read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
 
-CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
+CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | grep -P "node_exporter" | head -n 1 | grep -oP '[0-9]+\.[0-9]+\.[0-9]+')
 # FOR Alpine
 # CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oE '"name": .*' | head -n 1 | grep -oE '[0-9]\.[0-9]\.[0-9]')
 
