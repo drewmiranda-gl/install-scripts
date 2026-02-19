@@ -62,6 +62,9 @@ cd=$(ls -d $FILEDIR | tail -n 1)
 echo -e "Changing working dir: ${BLUE}${cd}${ENDCOLOR}"
 cd $cd
 
+echo -e "${YELLOW}Stopping service${ENDCOLOR}: ${BLUE}elasticsearch_exporter${ENDCOLOR}..."
+sudo systemctl stop elasticsearch_exporter
+
 echo -e "Copying elasticsearch_exporter to: ${BLUE}/usr/local/bin/${ENDCOLOR}"
 sudo cp elasticsearch_exporter /usr/local/bin/
 
