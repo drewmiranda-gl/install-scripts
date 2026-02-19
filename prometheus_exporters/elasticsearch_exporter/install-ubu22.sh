@@ -47,7 +47,7 @@ echo ""
 # read -p "Confirmation 2 of 2: Press [Enter] key to continue..."
 
 # CURVER=$(curl --silent https://api.github.com/repos/prometheus/node_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
-CURVER=$(curl --silent https://api.github.com/repos/prometheus-community/elasticsearch_exporter/releases | grep -oP '"name": .*' | head -n 1 | grep -oP '[0-9]\.[0-9]\.[0-9]')
+CURVER=$(curl --silent https://api.github.com/repos/prometheus-community/elasticsearch_exporter/releases | grep -oP '"name": .*' | grep -P "elasticsearch_exporter" | head -n 1 | grep -oP '[0-9]+\.[0-9]+\.[0-9]+')
 DLURL="https://github.com/prometheus-community/elasticsearch_exporter/releases/download/v${CURVER}/elasticsearch_exporter-${CURVER}.linux-${ARCH}.tar.gz"
 echo -e "Downloading ${BLUE}${CURVER}${ENDCOLOR} via ${DLURL}"
 wget --quiet $DLURL
