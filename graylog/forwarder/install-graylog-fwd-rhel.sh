@@ -14,6 +14,9 @@ root_check() {
 }
 root_check
 
+# Requires Java 21
+yum install -y java-21-openjdk-headless
+
 rpm -ivh https://downloads.graylog.org/repo/packages/graylog-forwarder-repository-7-1.noarch.rpm
 yum install -y graylog-forwarder
 
