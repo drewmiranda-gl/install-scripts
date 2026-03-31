@@ -14,6 +14,16 @@ root_check() {
 }
 root_check
 
+# Resolve WARN log entry
+# 
+#  WARN  [AbstractTcpTransport] receiveBufferSize (SO_RCVBUF) for input should be >= X but is Y.
+# 
+# The maximum socket receive buffer size which may be set by using the SO_RCVBUF socket option
+# Applies immediately, does not persist after a reboot
+sudo sysctl -w net.core.rmem_max=1048576
+# persists on reboot, but does not apply immediately
+echo 'net.core.rmem_max=1048576' | sudo tee -a /etc/sysctl.conf
+
 # Requires Java 21
 apt update
 apt-get install -y openjdk-21-jdk-headless
