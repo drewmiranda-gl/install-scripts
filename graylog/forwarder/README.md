@@ -25,3 +25,5 @@ One very important difference between upgrading Graylog and Graylog Forwarder is
         - Choose the selection that targets the latest java version
 4. **Reverify** java version
     - `java --version`
+
+Note that providing a fully automated and scriptable way to update `update-alternatives` is out of scope for this document.
