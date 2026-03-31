@@ -1,3 +1,9 @@
+# Installing Forwarder
+
+For offical public documentation from Graylog, see: https://go2docs.graylog.org/current/getting_in_log_data/forwarder_installation.html
+
+Reference examples provided in this repo.
+
 # Upgrading Forwarder
 
 Upgrading Graylog Forwarder is similiar to upgrading `graylog-server` (or `graylog-enterprise`): 
