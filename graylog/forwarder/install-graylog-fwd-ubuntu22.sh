@@ -14,6 +14,7 @@ root_check() {
 }
 root_check
 
+# Requires Java 21
 apt update
 apt-get install -y openjdk-21-jdk-headless
 
