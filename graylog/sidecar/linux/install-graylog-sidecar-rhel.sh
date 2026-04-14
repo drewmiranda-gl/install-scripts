@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo rpm -Uvh https://packages.graylog2.org/repo/packages/graylog-sidecar-repository-1-5.noarch.rpm
+sudo rpm -Uvh https://packages.graylog2.org/repo/packages/graylog-sidecar-repository-1-6.noarch.rpm
 sudo yum install graylog-sidecar
 
 # Set API URL

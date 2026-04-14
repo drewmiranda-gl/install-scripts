@@ -14,8 +14,8 @@ root_check() {
 }
 root_check
 
-wget https://packages.graylog2.org/repo/packages/graylog-sidecar-repository_1-5_all.deb
-dpkg -i graylog-sidecar-repository_1-5_all.deb 
+wget https://packages.graylog2.org/repo/packages/graylog-sidecar-repository_1-6_all.deb
+dpkg -i graylog-sidecar-repository_1-6_all.deb 
 apt-get update
 apt-get install graylog-sidecar
 
