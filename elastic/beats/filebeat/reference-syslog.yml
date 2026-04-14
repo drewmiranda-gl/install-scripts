@@ -1,0 +1,51 @@
+# TEMP
+# Needed for Graylog
+fields_under_root: true
+# fields.source: <hostname>
+
+filebeat.inputs:
+
+- type: tcp
+  enabled: true
+  host: "0.0.0.0:9876"
+  max_message_size: 10MiB
+
+  processors:
+    # preserve original for testing
+    - copy_fields:
+        fields:
+          - from: message
+            to: full_message
+        fail_on_error: false
+        ignore_missing: true
+
+    # --- Parse syslog message ---
+    - syslog:
+        field: message
+        format: auto           # auto-detect rfc3164 or rfc5424
+        timezone: UTC
+
+    # Optional: drop original message after parsing
+    # - drop_fields:
+    #     fields: ["message"]
+
+    # Optional: add tags
+    - add_tags:
+        tags: ["tcp", "syslog"]
+
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+
+logging:
+  level: info
+
+  # enable file rotation with default configuration
+  to_files: true
+
+  # do not log to syslog
+  to_syslog: false
+
+  files:
+    path: /var/log/beats
+    name: filebeat.log
+    keepfiles: 7
