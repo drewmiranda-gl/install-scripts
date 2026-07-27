@@ -19,9 +19,8 @@ db.createUser({
   user: "graylog",
   pwd: "<password>",
   roles: [
-      {role: "readWrite", db: "graylog"}
+      {role: "dbAdmin", db: "graylog"}
       , { role: "clusterMonitor", db: "admin" }
-      , { role: "clusterMonitor", db: "graylog" }
     ]
 });
 ```
@@ -64,7 +63,7 @@ sudo cat /etc/mongod.conf | grep -A 1 "security"
 
 Should output:
 
-```
+```yaml
 security:
   authorization: "enabled"
 ```
@@ -79,7 +78,7 @@ Update your `mongodb_uri` to include the updated mongod connection uri. This wil
 
 Updated example:
 
-```
+```ini
 mongodb_uri = mongodb://graylog:<password>@<mongo-server-hostname>:27017/graylog?authSource=admin
 ```
 
@@ -121,7 +120,6 @@ sudo systemctl restart mongod
 ## Delete a MongoD user
 
 ```js
-use graylog
 db.dropUser("graylog")
 ```
 
