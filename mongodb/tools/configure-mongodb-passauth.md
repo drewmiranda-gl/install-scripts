@@ -29,7 +29,7 @@ After the user has been created, you should see something like `{ ok: 1 }`
 
 To verify the user was created successfully, view all users using `show users`
 
-While not explicitly required, once `authorization` is enabled, you will no longer be able to carry out admin related tasks. If you desire, you can create an admin user. Alterntaively, you can also disable (e.g. commment out and restart `mongod`) the `authorization` setting to temporarily disable it.
+While not explicitly required, once `authorization` is enabled, you will no longer be able to carry out admin related tasks. If you desire, you can create an admin user. Note that this user will not be used by Graylog.
 
 ```js
 db.createUser({
@@ -40,6 +40,8 @@ db.createUser({
     ]
 });
 ```
+
+Alterntaively, you can also disable (e.g. commment out and restart `mongod`) the `authorization` setting to temporarily disable it.
 
 # Enable authorization for MongoD
 
