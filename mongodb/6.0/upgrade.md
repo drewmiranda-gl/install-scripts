@@ -4,7 +4,7 @@ This document covers the basics of upgrading a self-managed MongoDB node. Please
 
 These steps have been adapted from mongo's own documentation.
 
-# Ensure Compatibility set to 7.0
+# Ensure Compatibility set to 5.0
 
 ```sh
 mongosh --quiet --eval 'db.adminCommand( { getParameter: 1, featureCompatibilityVersion: 1 } )'
@@ -13,40 +13,25 @@ mongosh --quiet --eval 'db.adminCommand( { getParameter: 1, featureCompatibility
 IF output is NOT
 
 ```json
-{ featureCompatibilityVersion: { version: '7.0' }, ok: 1 }
+{ featureCompatibilityVersion: { version: '5.0' }, ok: 1 }
 ```
 
 SET correct compatibility version:
 
 ```sh
-db.adminCommand( { setFeatureCompatibilityVersion: "7.0" } )
+db.adminCommand( { setFeatureCompatibilityVersion: "5.0" } )
 ```
 
-# Install Repo for 8.0
+# Install Repo for 6.0
 
-NOTE: the following is specifically for **Ubuntu**
+NOTE: the following is specifically for **Ubuntu 22 (Jammy)**
 
-Updated gpg key
 ```sh
-curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
-   sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg \
+curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg \
    --dearmor
-```
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 
-Ubuntu Server 22 Jammy
-```sh
-# for reference, via https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
-echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
-```
-
-Ubuntu Server 24 Noble
-```sh
-# for reference, via https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
-echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
-```
-
-Apt Update
-```sh
 sudo apt update
 ```
 
@@ -79,7 +64,7 @@ mongodb-org-tools
 Set compatibility version to latest:
 
 ```sh
-mongosh --quiet --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "8.0", confirm: true } )'
+mongosh --quiet --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "6.0", confirm: true } )'
 ```
 
 Verify compatibility version is updated:
@@ -91,5 +76,5 @@ mongosh --quiet --eval 'db.adminCommand( { getParameter: 1, featureCompatibility
 Should output something like
 
 ```json
-{ featureCompatibilityVersion: { version: '8.0' }, ok: 1 }
+{ featureCompatibilityVersion: { version: '6.0' }, ok: 1 }
 ```
