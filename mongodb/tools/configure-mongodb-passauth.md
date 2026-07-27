@@ -29,6 +29,18 @@ After the user has been created, you should see something like `{ ok: 1 }`
 
 To verify the user was created successfully, view all users using `show users`
 
+While not explicitly required, once `authorization` is enabled, you will no longer be able to carry out admin related tasks. If you desire, you can create an admin user. Alterntaively, you can also disable (e.g. commment out and restart `mongod`) the `authorization` setting to temporarily disable it.
+
+```js
+db.createUser({
+  user: "admin",
+  pwd: "<password>",
+  roles: [
+      { role: "root", db: "admin" }
+    ]
+});
+```
+
 # Enable authorization for MongoD
 
 ## Update MongoD configuration file
