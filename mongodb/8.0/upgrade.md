@@ -76,6 +76,12 @@ mongodb-org-shell
 mongodb-org-tools
 ```
 
+Restart MongoD to run new version:
+
+```sh
+sudo systemctl restart mongod
+```
+
 Set compatibility version to latest:
 
 ```sh
