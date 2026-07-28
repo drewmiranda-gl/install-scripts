@@ -2,13 +2,27 @@
 
 This document covers the basics of configuring a MongoDB database to require password authentication.
 
-# Create a MongoD User
+# Create a MongoD User(s)
 
 The first thing we need to do is create a MongoD user. For full documentation see [db.createUser()](https://www.mongodb.com/docs/manual/reference/method/db.createUser/).
 
+## Graylog
+
 While you can create a user with any name and permissions, my primary focus and use of MongoD is Graylog so that is what I will be using for my examples.
 
-NOTE: be sure to replace `<password>` with the secure random password of your choosing. Make a note of this password as we will need it later.
+**NOTE**: be sure to replace `<password>` with the secure random password of your choosing. Make a note of this password as we will need it later.
+
+**NOTE**: [Special characters](https://www.mongodb.com/docs/atlas/troubleshoot-connection/#special-characters-in-connection-string-password) in a mongo connection string MUST be URL encoded. To perform URL encoding, you can use something like the [URL Encode](https://marketplace.visualstudio.com/items?itemName=flesler.url-encode) VSCode extension, or python:
+
+```sh
+# launch python
+python3
+```
+
+```py
+from urllib.parse import quote_plus
+quote_plus('<password>')
+```
 
 ```js
 use admin;
@@ -29,7 +43,11 @@ After the user has been created, you should see something like `{ ok: 1 }`
 
 To verify the user was created successfully, view all users using `show users`
 
+## Admin
+
 While not explicitly required, once `authorization` is enabled, you will no longer be able to carry out admin related tasks. If you desire, you can create an admin user. Note that this user will not be used by Graylog.
+
+If you are not sure if you need/want an admin account or not, you **should** create one.
 
 ```js
 db.createUser({
