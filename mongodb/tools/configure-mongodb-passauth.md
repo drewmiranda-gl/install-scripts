@@ -40,6 +40,8 @@ db.createUser({
 });
 ```
 
+For more information about Graylog Mongo roles and permissions, see https://go2docs.graylog.org/current/setting_up_graylog/cluster_configuration.htm#roles-and-permissions-for-mongodb-access
+
 After the user has been created, you should see something like `{ ok: 1 }`
 
 To verify the user was created successfully, view all users using `show users`
