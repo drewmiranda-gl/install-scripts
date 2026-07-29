@@ -2,9 +2,7 @@
 
 This document covers the basics of upgrading a self-managed MongoDB node from 7 to 8. Please rememeber to make a backup of your mongo database and/or snapshot your server/vm.
 
-These steps have been adapted from mongo's own documentation.
-
-See https://www.mongodb.com/docs/v8.0/tutorial/upgrade-revision/
+These steps have been adapted from [mongo's own documentation](https://www.mongodb.com/docs/v8.0/tutorial/upgrade-revision/).
 
 Please take care to review [Compatibility Changes in MongoDB 8.0](https://www.mongodb.com/docs/v8.0/release-notes/8.0-compatibility/)
 
