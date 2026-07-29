@@ -34,6 +34,7 @@ db.createUser({
   pwd: "<password>",
   roles: [
       {role: "dbAdmin", db: "graylog"}
+      , { role: "readWrite", db: "graylog" }
       , { role: "clusterMonitor", db: "admin" }
     ]
 });
