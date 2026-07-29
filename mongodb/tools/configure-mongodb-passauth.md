@@ -111,6 +111,8 @@ As a root/priveleged user, edit your `server.conf` (default: `/etc/graylog/serve
 
 Update your `mongodb_uri` to include the updated mongod connection uri. This will now include the user/password you created/configured earlier.
 
+**NOTE**: if you also use Graylog Datanode, you must also update the `mongodb_uri` in `datanode.conf` (default: `/etc/graylog/datanode/datanode.conf`). See also [Default File Locations](https://go2docs.graylog.org/current/setting_up_graylog/default_file_locations.html).
+
 Updated example:
 
 ```ini
@@ -128,10 +130,20 @@ After you update your Graylog config file, verify the setting using
 sudo cat /etc/graylog/server/server.conf | grep "^mongodb_uri"
 ```
 
+for Data Node:
+```sh
+sudo cat /etc/graylog/datanode/datanode.conf | grep "^mongodb_uri"
+```
+
 Restart Graylog service to apply the changes you made.
 
 ```sh
 sudo systemctl restart graylog-server
+```
+
+for Data Node:
+```sh
+sudo systemctl restart graylog-datanode
 ```
 
 NOTE: at this point we still have not enabled enforcement of password authorization for mongod.
