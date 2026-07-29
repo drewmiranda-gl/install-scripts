@@ -18,7 +18,7 @@ To remove the `fork: true` setting, run these commands from a system terminal:
 
 ```sh
 systemctl stop mongod.service
-sed -i.bak '/fork: true/d' /etc/mongod.conf
+sudo sed -i.bak '/fork: true/d' /etc/mongod.conf
 systemctl start mongod.service
 ```
 
