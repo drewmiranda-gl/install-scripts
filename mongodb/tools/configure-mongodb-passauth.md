@@ -152,6 +152,16 @@ sudo systemctl restart mongod
 
 # Appendix
 
+## Use mongosh with authentication
+
+You can append a mongo URI connction string to your mongosh command:
+
+NOTE: do not include the password, you will instead be prompted for it.
+
+```
+mongosh mongodb://graylog@<mongo-server-hostname>:27017/graylog?authSource=admin
+```
+
 ## Delete a MongoD user
 
 ```js
