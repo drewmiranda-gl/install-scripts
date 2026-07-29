@@ -48,6 +48,12 @@ curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
    --dearmor
 ```
 
+View your linux version via:
+
+```sh
+cat /etc/lsb-release
+```
+
 Only for Ubuntu 20 (Focal)
 ```
 # for reference, via https://www.mongodb.com/docs/v6.0/tutorial/install-mongodb-on-ubuntu/
