@@ -18,7 +18,7 @@ root_check
 sudo sysctl -w vm.max_map_count=262144
 echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf
 
-# for reference, via https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
+# for reference, via https://www.mongodb.com/docs/v6.0/tutorial/install-mongodb-on-ubuntu/
 curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg \
    --dearmor
