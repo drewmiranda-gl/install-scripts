@@ -24,6 +24,12 @@ from urllib.parse import quote_plus
 quote_plus('<password>')
 ```
 
+Launch `mongosh`:
+
+```sh
+mongosh
+```
+
 ```js
 use admin;
 ```
