@@ -30,36 +30,37 @@ NOTE: the following is specifically for **Ubuntu 22 (Jammy)**
 curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg \
    --dearmor
-echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+```
 
+Only for Ubuntu 20 (Focal)
+```
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+```
+
+Only for Ubuntu 22 (Jammy)
+
+```
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+```
+
+```
 sudo apt update
 ```
 
 # Perform Upgrade
 
-Execute `upgrade-minor.sh`
+Install updated binary files:
 
-NOTE: the above script does the following:
-1. generate a list of installed mongo packages that are eligble for upgrade
-   * `list --upgradable | grep mongo`
-2. Runs an upgrade command for the packages found from above
-   * `sudo apt install package1 pacakge2 package3`
-
-Note that the reason we cannot document an explicit list of packages is that the list of items may change (items added, items removed) or the names of packages may change.
-
-For reference only, here are a list of mongo package names.
-
+```sh
+sudo apt install mongodb-org mongodb-org-database-tools-extra mongodb-org-database mongodb-org-shell mongodb-org-tools mongodb-org-server mongodb-org-mongos
 ```
-mongodb-org
-mongodb-mongosh
-mongodb-database-tools
-mongodb-org-database
-mongodb-org-database-tools-extra
-mongodb-org-mongos
-mongodb-org-server
-mongodb-org-shell
-mongodb-org-tools
+
+NOTE: the above list is obtained by running:
+
+```sh
+apt list --upgradable | grep mongo
 ```
+
 
 Restart MongoD to run new version:
 
@@ -70,7 +71,7 @@ sudo systemctl restart mongod
 Set compatibility version to latest:
 
 ```sh
-mongosh --quiet --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "6.0", confirm: true } )'
+mongosh --quiet --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "6.0" } )'
 ```
 
 Verify compatibility version is updated:
@@ -83,4 +84,12 @@ Should output something like
 
 ```json
 { featureCompatibilityVersion: { version: '6.0' }, ok: 1 }
+```
+
+# Cleanup
+
+Remove old apt list file
+
+```sh
+sudo rm -f /etc/apt/sources.list.d/mongodb-org-5.0.list 2>/dev/null
 ```
