@@ -1,6 +1,6 @@
 # Introduction
 
-This document covers the basics of upgrading a self-managed MongoDB node. Please rememeber to make a backup of your mongo database and/or snapshot your server/vm.
+This document covers the basics of upgrading a self-managed MongoDB node from 7 to 8. Please rememeber to make a backup of your mongo database and/or snapshot your server/vm.
 
 These steps have been adapted from mongo's own documentation.
 
