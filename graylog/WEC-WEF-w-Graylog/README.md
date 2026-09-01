@@ -78,3 +78,87 @@ then
     set_field("source", to_string($message.winlogbeat_host_name));
 end
 ```
+
+# Appendix
+
+## Event ID 4732, Member added to Group, does not resolve user SID to username
+
+Windows Groups members are not tracked by username, but instead by [SID (Security Identifer)](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers). Because of this quirk, the security log entry for adding a member to a group, EventID 4732, does not contain the username that is added to the group.
+
+Out of the box, winlogbeat will log something like this:
+
+```
+A member was added to a security-enabled local group.
+
+Subject:
+	Security ID:		S-1-5-21-3154310583-1302463306-3378738105-1001
+	Account Name:		user
+	Account Domain:		PVE-W10-1
+	Logon ID:		0x6174E
+
+Member:
+	Security ID:		S-1-5-21-3154310583-1302463306-3378738105-1006
+	Account Name:		-
+
+Group:
+	Security ID:		S-1-5-21-3154310583-1302463306-3378738105-1008
+	Group Name:		AAA 2
+	Group Domain:		PVE-W10-1
+
+Additional Information:
+	Privileges:		-
+```
+
+Note that `Member.Security ID` is a SID (Security Identifier) and not a username. The `Member.Account Name` value is also empty: `-`.
+
+To workaround this, use the winlogbeat [Translate SID](https://www.elastic.co/guide/en/beats/winlogbeat/8.19/processor-translate-sid.html) processor.
+
+Example for reference:
+
+```yaml
+# Required settings
+fields_under_root: true
+fields.collector_node_id: ${sidecar.nodeName}
+fields.gl2_source_collector: ${sidecar.nodeId}
+
+path:
+  data: ${sidecar.spoolDir!"C:\\Program Files\\Graylog\\sidecar\\cache\\winlogbeat"}\data
+  logs: ${sidecar.spoolDir!"C:\\Program Files\\Graylog\\sidecar"}\logs
+
+tags:
+ - windows
+
+winlogbeat:
+  event_logs:
+   - name: Application
+     ignore_older: 1h
+   - name: System
+     ignore_older: 1h
+   - name: Security
+     ignore_older: 1h
+
+processors:
+  - translate_sid:
+      field: winlog.event_data.MemberSid
+      account_name_target: sid_user_name
+      domain_target: sid_user_domain
+      ignore_missing: true
+      ignore_failure: true
+
+output.logstash:
+   hosts: ["${user.graylog_host}:5044"]
+```
+
+Note this section specifically:
+
+```yaml
+processors:
+  - translate_sid:
+      field: winlog.event_data.MemberSid
+      account_name_target: sid_user_name
+      domain_target: sid_user_domain
+      ignore_missing: true
+      ignore_failure: true
+```
+
+See https://www.elastic.co/guide/en/beats/winlogbeat/8.19/processor-translate-sid.html for documentation.
