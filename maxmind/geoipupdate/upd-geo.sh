@@ -41,3 +41,6 @@ mv /etc/graylog/server/GeoLite2-ASN.tmp  /etc/graylog/server/GeoLite2-ASN.mmdb
 # copy update Geo ASN
 cp /usr/share/GeoIP/GeoLite2-City.mmdb /opt/graylog/
 cp /usr/share/GeoIP/GeoLite2-ASN.mmdb /opt/graylog/
+
+chown graylog:graylog /etc/graylog/server/GeoLite2-City.mmdb
+chown graylog:graylog /etc/graylog/server/GeoLite2-ASN.mmdb
