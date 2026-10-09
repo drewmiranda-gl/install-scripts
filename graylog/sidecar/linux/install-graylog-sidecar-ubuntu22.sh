@@ -14,8 +14,12 @@ root_check() {
 }
 root_check
 
-wget https://packages.graylog2.org/repo/packages/graylog-sidecar-repository_1-6_all.deb
-dpkg -i graylog-sidecar-repository_1-6_all.deb 
+REPO_BASE="https://packages.graylog2.org"
+LATEST_REPO_URL=$(curl "${REPO_BASE}/packages" 2>/dev/null | grep "graylog-sidecar-repository" | grep -oP 'href=".*"' | grep "deb" | sort -r | head -n 1 | sed 's/^href="//' | sed 's/"$//')
+FILE_NAME_ONLY=$(echo $LATEST_REPO_URL | sed 's/^\/.*\///')
+
+wget "${REPO_BASE}${LATEST_REPO_URL}"
+dpkg -i "${FILE_NAME_ONLY}"
 apt-get update
 apt-get install graylog-sidecar
 
@@ -26,5 +30,4 @@ echo -ne "Enter Graylog API\nExample: http://hostname.domain.tld:port/api/\nNOTE
 echo -n "Enter Graylog API Token: " && tmp=$(head -1 </dev/stdin) && sudo sed -i "s/.*server_api_token:.*/server_api_token: \"$tmp\"/g" /etc/graylog/sidecar/sidecar.yml
 
 graylog-sidecar -service install
-systemctl enable graylog-sidecar
-systemctl start graylog-sidecar
+systemctl enable graylog-sidecar --now
