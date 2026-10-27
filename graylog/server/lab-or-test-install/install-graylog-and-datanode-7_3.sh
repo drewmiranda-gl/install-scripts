@@ -1,4 +1,27 @@
 #!/bin/bash
+set -e
+
+case "$OSTYPE" in
+  darwin*|bsd*)
+    # echo "Detected OS: MacOS (${OSTYPE})"
+    # CLICOLOR=1
+    # export CLICOLOR=1
+    # export TERM="xterm-256color"
+    # autoload -U colors && colors
+    RED="\x1B[31m"
+    GREEN="\x1B[32m"
+    BLUE="\x1B[34m"
+    YELLOW="\x1B[33m"
+    ENDCOLOR="\x1B[0m"
+    ;;
+  *)
+    RED="\e[31m"
+    GREEN="\e[32m"
+    BLUE="\e[34m"
+    YELLOW="\e[33m"
+    ENDCOLOR="\e[0m"
+  ;;
+esac
 
 # For Ubuntu Server 24 LTS
 
@@ -21,6 +44,22 @@ root_check() {
     fi
 }
 root_check
+
+# Disk Space Check
+target="/"
+BYTES_REQ_STRING="10G"
+min_bytes=$(numfmt --from=iec "$BYTES_REQ_STRING") || exit 2
+
+avail_bytes=$(( $(df -Pk "$target" | awk 'NR==2 {print $4}') * 1024 ))
+
+echo -e "${YELLOW}Checking for available disk space...${ENDCOLOR}"
+if (( avail_bytes < min_bytes )); then
+  echo -e "${RED}FAIL${ENDCOLOR}: ${YELLOW}$(numfmt --to=iec "$avail_bytes") free${ENDCOLOR} on ${BLUE}$target${ENDCOLOR}, need ${RED}$BYTES_REQ_STRING${ENDCOLOR}" >&2
+  exit 1
+else
+    echo -e "${GREEN}OK${ENDCOLOR}: ${YELLOW}$(numfmt --to=iec "$avail_bytes") free${ENDCOLOR} on ${BLUE}$target${ENDCOLOR}"
+fi
+
 
 # Configure the kernel parameters at runtime
 # See https://opensearch.org/docs/latest/install-and-configure/install-opensearch/index/#important-settings
@@ -52,9 +91,7 @@ ExecStart=/bin/sh -c 'echo never | tee /sys/kernel/mm/transparent_hugepage/enabl
 [Install]
 WantedBy=basic.target" | sudo tee /etc/systemd/system/disable-transparent-huge-pages.service
 
-sudo systemctl daemon-reload
-sudo systemctl start disable-transparent-huge-pages
-sudo systemctl enable disable-transparent-huge-pages
+sudo systemctl daemon-reload && sudo systemctl start disable-transparent-huge-pages --now
 # =============================================================================
 
 # =============================================================================
@@ -67,13 +104,10 @@ curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | \
 
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
 
-sudo apt update
-sudo apt install -y mongodb-org mongodb-mongosh
-
-# Enable MongoDB service
-sudo systemctl daemon-reload
-sudo systemctl enable mongod.service
-sudo systemctl start mongod.service
+sudo apt update && \
+    sudo apt install -y mongodb-org mongodb-mongosh && \
+    sudo systemctl daemon-reload && \
+    sudo systemctl enable mongod.service --now
 
 # =============================================================================
 # DataNode
@@ -90,15 +124,13 @@ tmppw=$(openssl rand -hex 32)
 sudo sed -i "s/password_secret =.*/password_secret = $tmppw/g" /etc/graylog/datanode/datanode.conf
 tmppw=abc
 
-sudo systemctl daemon-reload
-sudo systemctl enable graylog-datanode
-sudo systemctl start graylog-datanode
+sudo systemctl daemon-reload && sudo systemctl enable graylog-datanode --now
 
 # =============================================================================
 # Graylog
 # required for reporting
 sudo apt-get install -y fontconfig fonts-dejavu
-sudo apt update --allow-releaseinfo-change && sudo apt install -y graylog-enterprise
+sudo apt install -y graylog-enterprise
 
 sudo cp /etc/graylog/server/server.conf server.conf.bak
 sudo sed -i "s/root_password_sha2 =.*/root_password_sha2 = $(cat /etc/graylog/datanode/datanode.conf | grep -P "root_password_sha2 = .*" | sed 's/root_password_sha2 =[[:blank:]]*//g')/g" /etc/graylog/server/server.conf
@@ -108,12 +140,5 @@ sudo sed -i 's/#http_bind_address = 127.0.0.1.*/http_bind_address = 0.0.0.0:9000
 
 echo "selfsigned_startup = true" | sudo tee -a /etc/graylog/server/server.conf
 
-sudo systemctl daemon-reload
-sudo systemctl enable graylog-server
-sudo systemctl start graylog-server
+sudo systemctl daemon-reload && sudo systemctl enable graylog-server --now
 
-# echo "Please run to obtain first run password:"
-# echo 'cat /var/log/graylog-server/server.log | grep -P "Initial configuration is accessible at"'
-echo "Waiting for 5 seconds to allow Graylog services to start..."
-sleep 5
-cat /var/log/graylog-server/server.log | grep -P "Initial configuration is accessible at"
