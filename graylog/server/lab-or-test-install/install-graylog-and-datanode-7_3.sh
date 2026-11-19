@@ -139,6 +139,7 @@ sudo sed -i "s/password_secret =.*/password_secret = $(cat /etc/graylog/datanode
 sudo sed -i 's/#http_bind_address = 127.0.0.1.*/http_bind_address = 0.0.0.0:9000/g' /etc/graylog/server/server.conf
 
 echo "selfsigned_startup = true" | sudo tee -a /etc/graylog/server/server.conf
+echo "telemetry_enabled = false" | sudo tee -a /etc/graylog/server/server.conf
 
 sudo systemctl daemon-reload && sudo systemctl enable graylog-server --now
 
